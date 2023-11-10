@@ -21,7 +21,9 @@ Transfer your tokens to the contract & Call the lockPresaleTokens function to lo
 *Make sure you're calculating your SC/HC ratio properly and that you are providing sufficient tokens for after the presale ends to back liquidity*
 
 *Scenario A - Hard cap is hit and 90% of the ETH + ALL of the tokens remaining in the contract will be used to back LP.*
+
 *Scenario B - Soft cap is hit and 90% of the ETH + ALL of the tokens remaining in the contract will be used to back LP.*
+
 *Scenario C - Soft cap is not hit and the ETH will be refundable via claim to the presale participants until the presale is reset* (After that users cant claim a refund but their contribution is still mapped)*
 
 4. Contribute to the Presale:
