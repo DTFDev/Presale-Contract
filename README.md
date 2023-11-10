@@ -24,7 +24,7 @@ Transfer your tokens to the contract & Call the lockPresaleTokens function to lo
 
 *Scenario B - Soft cap is hit and 90% of the ETH + ALL of the tokens remaining in the contract will be used to back LP.*
 
-*Scenario C - Soft cap is not hit and the ETH will be refundable via claim to the presale participants until the presale is reset* (After that users cant claim a refund but their contribution is still mapped)*
+*Scenario C - Soft cap is not hit and the ETH will be refundable via claim to the presale participants until the presale is reset* (After that users cant claim a refund until after the presale - their contributions are all still mapped)*
 
 4. Contribute to the Presale:
 Users can contribute to the presale by sending ETH to the contract address. This is done by simply sending ETH to the contract address or calling the buy function.
