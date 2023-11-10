@@ -28,6 +28,7 @@ After finalizing the presale, the owner can call the withdrawTokens function to 
 If needed, the owner can reset the presale by calling the resetPresale function. This can only be done after the presale has ended and the soft cap is not reached.
 
 ***EXAMPLE DATA FOR INITIALIZING:***
+
 Name           | Type    | Data
 
 _token         | address | 0x0000000000000000000000000000000000000000 (Token Address) **change to yours**
