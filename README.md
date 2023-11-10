@@ -30,6 +30,7 @@ If needed, the owner can reset the presale by calling the resetPresale function.
 ***EXAMPLE DATA FOR INITIALIZING:***
 Name           | Type    | Data
 _token         | address | 0x0000000000000000000000000000000000000000 (Token Address) **change to yours**
+
 _rate          | uint256 | 2500000000 (2.5 tokens per 1 Gwei) (2.5 billion tokens / 1 ETH) **change to yours**
 _softCap       | uint256 | 20000000000000000000 Wei (20 ETH)  **change to yours**
 _hardCap       | uint256 | 100000000000000000000 Wei (100 ETH)  **change to yours**
