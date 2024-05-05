@@ -88,8 +88,8 @@ contract TokenNamePresale { // Change this contract name
         startTime = _startTime;
         endTime = _endTime;
 
-        uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
-        uniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f);
+        uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D); // (ETH) VARIES PER CHAIN
+        uniswapV2Factory = IUniswapV2Factory(0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f); // (ETH) VARIES PER CHAIN
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Factory).createPair(address(token), uniswapV2Router.WETH());
 
         initialized = true;
@@ -137,9 +137,6 @@ contract TokenNamePresale { // Change this contract name
 
         // Transfer tokens to the buyer
         safeTransfer(token, msg.sender, amount);
-        // Approve contract to spend the same amount of tokens on behalf of the buyer
-        IERC20(token).approve(address(this), amount);
-
         emit TokensPurchased(msg.sender, amount);
     }
 
@@ -191,6 +188,9 @@ contract TokenNamePresale { // Change this contract name
     function finalizePresale() external onlyOwner {
         require(hasEnded(), "Presale has not ended yet.");
 
+        // Update presale token balance
+    	presaleTokens = token.balanceOf(address(this));
+
         if (totalRaised < softCap) {
             isRefunded = true;
             return;
@@ -201,13 +201,16 @@ contract TokenNamePresale { // Change this contract name
         uint256 unsoldTokens = presaleTokens - totalRaised * rate;
 
         // Add liquidity and lock it
-        addLiquidityAndLock(unsoldTokens);
+        addLiquidityAndLock(presaleTokens);
 
         // Presale finalized successfully
         presaleFinalized = true;
     }
 
-    function addLiquidityAndLock(uint256 unsoldTokens) internal {
+    function addLiquidityAndLock(uint256 /* actualTokenBalance */) internal {
+        // Ensure that unsoldTokens does not exceed the actualTokenBalance
+
+        uint256 unsoldTokens = token.balanceOf(address(this)) < presaleTokens ? token.balanceOf(address(this)) : presaleTokens;
         uint256 raisedEth = address(this).balance;
 
         // Calculate 90% of raisedEth (You can change this too if you'd like - 10% is kept in the contract for team/development)
@@ -225,8 +228,9 @@ contract TokenNamePresale { // Change this contract name
             owner,
             block.timestamp + 1 weeks // Deadline one week from now
         );
-
+    
         emit LiquidityAddedAndLocked(amountToken, amountETH);
+
     }
 
     // Withdraw remaining 10%
