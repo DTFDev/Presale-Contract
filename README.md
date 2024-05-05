@@ -15,10 +15,10 @@ Deploy the smart contract to the Ethereum network of your choice using a tool li
 After deploying, call the initialize function to set the initial parameters of the presale, such as the token contract, rate, soft cap, hard cap, min and max contribution amounts, and the start and end times for the presale.
 
 3. Lock Presale Tokens:
-Transfer your tokens to the contract & Call the lockPresaleTokens function to lock the presale tokens in the contract. This step is very important for later calculations.
+Transfer your tokens to the contract & Call the lockPresaleTokens function to "lock" the presale tokens in the contract. **This step is very important for later calculations.**
 
 **(THE ENTIRE REMAINING TOKEN BALANCE WILL BE TRANSFERRED INTO THE LIQUIDITY POOL AFTER THE PRESALE ENDS IF THE SOFT/HARD CAP IS HIT.)**
-*Make sure you're calculating your SC/HC ratio properly and that you are providing sufficient tokens for after the presale ends to back liquidity*
+*Make sure you're calculating your SC/HC ratio properly and that you are providing sufficient tokens for after the presale ends to back liquidity and also not mess with the rate of your presale buys (too many tokens backed after the presale with not enough tokens distrubted = price decrease for presale contributions on uniswap) [good ratio of tokens being backed on uniswap is </= tokens distributed during the presale]*
 
 *Scenario A - Hard cap is hit and 90% of the ETH + ALL of the tokens remaining in the contract will be used to back LP.*
 
@@ -34,7 +34,7 @@ Users can contribute to the presale by sending ETH to the contract address. This
 Use the presaleStatus function to check the current status of the presale (Not started yet, Live, or Ended).
 
 6. Claim Refunds:
-If the presale ends and the soft cap is not reached, contributors can call the claimRefundAndReturnTokens function to claim a refund. **This is only allowed if the presale has not been reset!**
+If the presale ends and the soft cap is not reached, call the finalize presale function, this will trigger the contract into refund mode; Contributors can then call the claimRefundAndReturnTokens function to claim a refund and return their tokens. **This is only allowed if the presale has not been reset!**
 
 7. Finalize the Presale:
 If the presale ends, and the soft cap is reached, call the finalizePresale function to either add liquidity and lock tokens or set the presale as refunded based on the total raised amount.
@@ -43,7 +43,7 @@ If the presale ends, and the soft cap is reached, call the finalizePresale funct
 After finalizing the presale, the owner can call the withdrawTokens function to retrieve any remaining tokens in the contract. The withdrawETH function can be used to withdraw the remaining 10% of ETH.
 
 9. Reset the Presale (Optional):
-If needed, the owner can reset the presale by calling the resetPresale function. This can only be done after the presale has ended and the soft cap is NOT reached.
+If needed, the owner can reset the presale by calling the resetPresale function. This can only be done after the presale has ended and the soft cap is NOT reached. **(BE SURE TO DO THIS AFTER ALL REFUNDS ARE CLAIMED. RESETTING THE PRESALE WILL RESULT IN PREVIOUS CONTRIBUTIONS BEING ERASED SO THEY WILL NO LONGER BE ABLE TO CLAIM A REFUND. THEIR CONTRIBUTIONS WILL STILL EXIST TO THE TOTAL RAISED THOUGH)**
 
 ***EXAMPLE DATA FOR INITIALIZING:***
 
